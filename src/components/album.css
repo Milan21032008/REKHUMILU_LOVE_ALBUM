@@ -1,0 +1,142 @@
+.book-container {
+    width: 100%;
+    max-width: 90vw;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.book {
+    width: 85vh; /* Aspect ratio slightly wider */
+    height: 65vh;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+@media (max-width: 768px) {
+    /* Styles for mobile are now handled by the MobileAlbum component with the carousel */
+    .book-container {
+        display: none;
+    }
+}
+
+.book-page-container {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    transform-style: preserve-3d;
+    transform-origin: left;
+    transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    border-top-right-radius: var(--radius);
+    border-bottom-right-radius: var(--radius);
+    cursor: pointer;
+}
+
+.book-page-container.flipped {
+    transform: rotateY(-180deg);
+}
+
+.book-page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background-color: hsl(var(--card));
+    border: 2px solid hsl(var(--foreground) / 0.4);
+}
+
+.book-page-front {
+    border-top-right-radius: var(--radius);
+    border-bottom-right-radius: var(--radius);
+}
+
+.book-page-back {
+    transform: rotateY(180deg);
+    border-top-left-radius: var(--radius);
+    border-bottom-left-radius: var(--radius);
+}
+
+.album-page-cover-front,
+.album-page-cover-back {
+    background-color: hsl(var(--primary));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    border: 1px solid hsl(var(--border));
+}
+
+.album-page-cover-front {
+    border-top-right-radius: var(--radius);
+    border-bottom-right-radius: var(--radius);
+}
+.album-page-cover-back {
+    transform: rotateY(180deg); /* This needs to be on the back of the leaf */
+    border-top-left-radius: var(--radius);
+    border-bottom-left-radius: var(--radius);
+}
+
+.album-page-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: hsl(var(--background));
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.album-page-content.image-page {
+    padding: 0;
+}
+
+.album-page-content img {
+    border: 0;
+}
+
+.book-page-back .album-page-content {
+    border-top-left-radius: var(--radius);
+    border-bottom-left-radius: var(--radius);
+}
+
+.book-page-back .album-page-content img {
+    border-radius: 0;
+    border-top-left-radius: var(--radius);
+    border-bottom-left-radius: var(--radius);
+}
+
+.book-page-front .album-page-content {
+    border-top-right-radius: var(--radius);
+    border-bottom-right-radius: var(--radius);
+}
+
+.book-page-front .album-page-content img {
+    border-radius: 0;
+    border-top-right-radius: var(--radius);
+    border-bottom-right-radius: var(--radius);
+}
+/* --- CLICK HEART ANIMATION --- */
+@keyframes floatUpFade {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) scale(1.5); /* Upar jayega */
+    opacity: 0; /* Gayab ho jayega */
+  }
+}
+
+.click-heart {
+  position: fixed;
+  pointer-events: none; /* Zaroori hai taaki click block na ho */
+  z-index: 9999; /* Sabse upar dikhega */
+  animation: floatUpFade 0.8s ease-out forwards;
+}     
